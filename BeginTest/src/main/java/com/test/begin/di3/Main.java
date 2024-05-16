@@ -7,11 +7,6 @@ public class Main {
 
 	public static void main(String[] args) {
 		
-//		Hong hong = new Hong();
-//		
-//		Service service = new Service(hong); // 생성자 의존 주입 발생(DI)
-//		service.work();
-		
 		//Hong 객체 생성하기
 		//1. 개발자가 직접 생성
 		//Hong hong = new Hong();
@@ -20,7 +15,8 @@ public class Main {
 		//- di3.xml 환경 설정을 읽어오기
 		
 		//ApplicationContext context = new ClassPathXmlApplicationContext("file:/src/main/java/com/test/begin/di3/di3.xml");
-		ApplicationContext context = new ClassPathXmlApplicationContext("./com/test/begin/di3/di3.xml");
+		
+		ApplicationContext context = new ClassPathXmlApplicationContext("com/test/begin/di3/di3.xml");
 		
 		//Hong hong = (Hong)context.getBean("hong");
 		//hong.coding();
@@ -29,6 +25,7 @@ public class Main {
 		Service service = (Service)context.getBean("service");
 		
 		//service.setHong(hong);
+		
 		service.work();
 		
 		
@@ -41,15 +38,12 @@ public class Main {
 		hong2.coding();
 		hong5.coding();
 		
+		
+		
+		
 	}
+	
 }
-
-
-
-
-
-
-
 
 
 

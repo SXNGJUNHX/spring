@@ -4,14 +4,15 @@ import java.util.Calendar;
 
 import org.aspectj.lang.ProceedingJoinPoint;
 
+//보조 업무 객체
 public class Logger {
 
 	public void log(String message) {
-		
 		Calendar now = Calendar.getInstance();
-		System.out.printf("[LOG]%tF %tF > %s\n", now, now, message);
-		
+		System.out.printf("[LOG]%tF %tT > %s\n"
+							, now, now, message);
 	}
+	
 	
 	//보조 업무 구현
 	public void after() {
@@ -20,7 +21,7 @@ public class Logger {
 	
 	
 	//보조 업무 구현
-	public void around(ProceedingJoinPoint jp) throws Throwable {
+	public void around(ProceedingJoinPoint jp) {
 		
 		//주업무를 실행되는 소요시간 기록
 		//1. 기록 시작
@@ -34,35 +35,34 @@ public class Logger {
 		//memo.add("메모");
 		try {
 			jp.proceed();
-		} catch (Exception e) {
+		} catch (Throwable e) {
 			e.printStackTrace();
 		}
 		
-		
 		long end = System.nanoTime();
-		System.out.println("[Log] 기록을 종료합니다.");
+		System.out.println("[LOG] 기록을 종료합니다.");
 		
-		System.out.printf("[LOG] 소요시간 %,dns\n", end - begin);
+		System.out.printf("[LOG] 소요 시간 %,dns\n", end - begin);		
 		
 	}
 	
 	//After-returning
 	public void history(String memo) {
 		
-		System.out.println("[LOG] 새로운 메모 읽기: " + memo);
-		
+		System.out.println("[LOG] 메모 읽기: " + memo);
 	}
 	
 	//After-throwing
 	public void check(Exception e) {
-		
 		System.out.println("[LOG] 예외 발생: " + e.getMessage());
 		//DB Insert..
 		//담당자 메일 발생 or 문자 메세지
-		
 	}
 	
+	
 }
+
+
 
 
 

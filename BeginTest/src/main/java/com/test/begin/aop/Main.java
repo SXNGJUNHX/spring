@@ -4,7 +4,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
 public class Main {
-	
+
 	public static void main(String[] args) {
 		
 		//주 업무 객체 > MemoImpl
@@ -12,7 +12,6 @@ public class Main {
 		
 		//주 업무 객체 > 빈으로 생성하기 > 스프링 컨테이너에 의해서 관리
 		ApplicationContext context = new ClassPathXmlApplicationContext("com/test/begin/aop/memo.xml");
-		
 		MemoImpl memo = (MemoImpl)context.getBean("memo");
 		
 		//글쓰기
@@ -20,14 +19,13 @@ public class Main {
 		
 		memo.addSecret("스프링 작업 중입니다.");
 		
+		
 		//글읽기
 		try {
-			
 			String content = memo.read(10);
 			System.out.println(content);
-			
-		} catch (Exception e) {	
-			//e.printStackTrace();
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		
 		//수정
@@ -37,5 +35,20 @@ public class Main {
 		result = memo.del(15);
 		
 	}
-
+	
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
