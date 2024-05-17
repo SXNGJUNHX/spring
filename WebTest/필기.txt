@@ -143,7 +143,14 @@ Enter a topLevelPackage : "com.test.web"
 	
 	
 	
-	
+- "com.test.web.controller"
+		> "Ex10Controller.java"	
+- "com.text.web.service"
+		> "BoardService.java"
+		> "DataService.java"(I)
+		> "MemoService.java"
+- views > "ex10.jsp"
+- 의존주입	
 	
 	
 	
