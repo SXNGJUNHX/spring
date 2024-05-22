@@ -118,7 +118,7 @@ Common DBCP
 com.test.mybatis.persistence > "DBCPTest.java"
 
 
-KikariCP
+HikariCP
 - pom.xml > 의존성 추가
 - root-context.xml > 설정 추가
 

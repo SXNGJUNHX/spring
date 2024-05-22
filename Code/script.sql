@@ -85,6 +85,8 @@ select * from tblInfo;
 -- tblMemo
 select * from tblMemo;
 
+select * from tblAddress a inner join tblInfo i on a.seq = i.seq;
+select * from tblAddress a left outer join tblMemo m on a.seq = m.aseq;
 
 
 
