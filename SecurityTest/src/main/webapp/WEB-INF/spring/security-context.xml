@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd">
+
+	<!-- security-context.xml -->
+	
+	<!-- 23.2. 403처리-->
+	<bean id="customAccessDenied" class="com.test.security.auth.CustomAccessDeniedHandler"></bean>
+	<!-- 25. 로그인 성공 처리 핸들러 -->
+	<bean id="customLoginSuccess" class="com.test.security.auth.CustomLoginSuccessHandler"></bean>
+	<!-- 29. PasswordEncoder -->
+	<!-- <bean id="customPasswordEncoder" class="com.test.security.auth.CustomNoOpPasswordEncoder"></bean> -->
+	<!-- 31. PasswordEncoder : blowfish -->
+	<bean id="bcryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"></bean>
+	
+	<!-- 유저 정보 객체 -->
+	<bean id="customUserDetailsService" class="com.test.security.auth.CustomUserDetailsService"></bean>
+	
+	<!-- 16.
+	<security:http>
+		<security:form-login/>
+	</security:http>
+	-->
+	<!-- 20. 허가 관련 설정-->
+	<security:http>
+	
+		<!-- URI 허가 -->
+		<security:intercept-url pattern="/index.do" access="permitAll"/>
+		<security:intercept-url pattern="/member.do" access="hasRole('ROLE_MEMBER')"/>
+		<!-- 22. -->
+		<security:intercept-url pattern="/admin.do" access="hasRole('ROLE_ADMIN')"/>
+		
+		<!-- 23.1. 403처리 -->
+		<!-- <security:access-denied-handler error-page="/accesserror.do"/> -->
+		<security:access-denied-handler ref="customAccessDenied"/>
+		
+		
+		<!-- 폼 인증 -->
+		<!-- 16.
+		<security:form-login/> -->
+		<!-- 24. 커스텀  로그인 페이지-->
+		<!-- <security:form-login login-page="/customlogin.do"/> -->
+		
+		<!-- 25. 커스텀 성공 핸들러 -->
+		<security:form-login login-page="/customlogin.do" authentication-success-handler-ref="customLoginSuccess"/>
+		
+		<!-- 26. 로그아웃 -->
+		<security:logout logout-url="/customlogout.do" invalidate-session="true" logout-success-url="/index.do"/> <!-- POST맵핑으로 만들어짐 -->
+		
+	</security:http>
+
+
+	<!-- 16. 
+	<security:authentication-manager>
+	</security:authentication-manager>
+	-->
+	
+	<!-- 21. 인증 관련 설정 -->	
+	<security:authentication-manager>
+		<!-- 
+		<security:authentication-provider>
+			22. InMemory 방식
+			<security:user-service>
+				계정(사용자)
+				<security:user name="hong" password="1111" authorities="ROLE_MEMBER"/>
+				<security:user name="hong" password="{noop}1111" authorities="ROLE_MEMBER"/>
+				
+				<security:user name="admin" password="{noop}1111" authorities="ROLE_ADMIN"/>
+				<security:user name="admin" password="{noop}1111" authorities="ROLE_MEMBER,ROLE_ADMIN"/>				
+			</security:user-service>
+			
+			 
+			 JDBC 방식
+			<security:jdbc-user-service data-source-ref="dataSource"/>
+			<security:jdbc-user-service data-source-ref="dataSource" users-by-username-query="select memberid as username, menabled from member where memberid = ?" authorities-by-username-query="select memberid as username, auth as authority from member_auth where memberid = ?" />
+
+			 
+			 29. 커스텀 PasswordEncoder
+			 <security:password-encoder ref="customPasswordEncoder"/>
+			 
+			 
+			 
+			 31. 커스텀 PasswordEncoder blowfish
+			 <security:password-encoder ref="bcryptPasswordEncoder"/>			 
+		</security:authentication-provider>
+		 -->
+		 <security:authentication-provider user-service-ref="customUserDetailsService">
+		 	<security:password-encoder ref="bcryptPasswordEncoder"/>
+		 </security:authentication-provider>
+		 
+	</security:authentication-manager>
+	
+</beans>

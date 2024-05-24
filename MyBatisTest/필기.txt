@@ -83,12 +83,12 @@ Enter a topLevelPackage : com.text.mybatis
 <dependency>
 	<groupId>org.springframework</groupId>
 	<artifactId>spring-tx</artifactId>
-	<version>${org.springframwork-version}</version>
+	<version>${org.springframework-version}</version>
 </dependency>
 <dependency>
 	<groupId>org.springframework</groupId>
 	<artifactId>spring-jdbc</artifactId>
-	<version>${org.springframwork-version}</version>
+	<version>${org.springframework-version}</version>
 </dependency>
 
 
